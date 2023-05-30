@@ -8,24 +8,24 @@ import {
   showSpinner,
   hideSpinner,
 } from "./dom-manipulation/domManipulation";
-import { getWeather } from "./networking/weather";
+import { getWeather, getWeatherPromises } from "./networking/weather";
 
-export const displayWeather = async () => {
-  try {
-    (<HTMLInputElement>buttonClick).disabled = true;
-    let city = await getCity();
-    if (city !== "") {
-      showSpinner();
-      const response = await getWeather(city);
-      updateInteface(response);
-      hideSpinner();
-    }
-  } catch (err) {
-    clearInterface();
-    hideSpinner();
-    alert("Error, no se encontró ciudad, intentelo de nuevo");
-  } finally {
-    (<HTMLInputElement> buttonClick).disabled = false;
+export const displayWeather = () => {
+  let city = getCity();
+  if (city !== "") {
+    showSpinner();
+    getWeatherPromises(city)
+      .then((response) => {
+        updateInteface(response);
+      })
+      .catch((_) => {
+        clearInterface();
+        alert("Error, no se encontró ciudad, intentelo de nuevo");
+      })
+      .finally(() => {
+        hideSpinner();
+        (<HTMLInputElement>buttonClick).disabled = false;
+      });
   }
 };
 
