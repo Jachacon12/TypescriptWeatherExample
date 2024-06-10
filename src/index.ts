@@ -11,6 +11,7 @@ import {
 } from './dom-manipulation/domManipulation';
 
 const defaultCity = 'London';
+const overlayElement = document.getElementById('overlay');
 
 // Initialize app
 updateInteface(JSON.parse(response));
@@ -20,6 +21,7 @@ buttonClick!.addEventListener('click', async () => {
   // Disable button after click
   buttonClick!.style.opacity = '0.5';
   buttonClick!.style.pointerEvents = 'none';
+  overlayElement!.style.opacity = '1';
 
   try {
     // Get new value of location input, fallback to defaultCity if undefined
@@ -38,7 +40,10 @@ buttonClick!.addEventListener('click', async () => {
     }
   } finally {
     // Re-enable button after fetch operation
-    buttonClick!.style.pointerEvents = 'all';
-    buttonClick!.style.opacity = '1';
+    setTimeout(() => {
+      buttonClick!.style.pointerEvents = 'all';
+      buttonClick!.style.opacity = '1';
+      overlayElement!.style.opacity = '0';
+    }, 300);
   }
 });
