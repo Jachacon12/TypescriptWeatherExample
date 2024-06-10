@@ -21,8 +21,8 @@ const descElement = document.getElementById('weather-desc');
 
 // TODO: Create the logic of the function
 export const updateInteface = (weather: WeatherResponse): void => {
-  if (maxTempElement) maxTempElement.innerText = `${weather.main.temp_max} ºC`;
-  if (minTempElement) minTempElement.innerText = `${weather.main.temp_min} ºC`;
+  if (maxTempElement) maxTempElement.innerText = `${weather.main.temp_max}ºC`;
+  if (minTempElement) minTempElement.innerText = `${weather.main.temp_min}ºC`;
   if (humidityElement) humidityElement.innerText = `${weather.main.humidity}%`;
   if (windElement) windElement.innerText = `${weather.wind.speed} m/s`;
   if (locationElement) locationElement.innerText = `${weather.name}`;
@@ -30,7 +30,7 @@ export const updateInteface = (weather: WeatherResponse): void => {
   if (dateElement) dateElement.innerText = `${getDate()}`;
   if (dateElement) dateElement.innerText = `${getDate()}`;
   if (weather?.weather[0]?.icon) changeWeatherIcon(weather.weather[0].icon);
-  if (tempElement) tempElement.innerText = `${weather.main.temp} ºC`;
+  if (tempElement) tempElement.innerText = `${weather.main.temp}ºC`;
   if (descElement) descElement.innerText = `${weather.weather[0].description}`;
 };
 
