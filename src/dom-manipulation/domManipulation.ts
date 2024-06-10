@@ -15,6 +15,8 @@ const windElement = document.getElementById('text-wind');
 const locationElement = document.getElementById('location-text');
 const dayElement = document.getElementById('date-dayname');
 const dateElement = document.getElementById('date-day');
+const tempElement = document.getElementById('weather-temp');
+const descElement = document.getElementById('weather-desc');
 
 // TODO: Create the logic of the function
 export const updateInteface = (weather: WeatherResponse): void => {
@@ -27,6 +29,8 @@ export const updateInteface = (weather: WeatherResponse): void => {
   if (dateElement) dateElement.innerText = `${getDate()}`;
   if (dateElement) dateElement.innerText = `${getDate()}`;
   if (weather?.weather[0]?.icon) changeWeatherIcon(weather.weather[0].icon);
+  if (tempElement) tempElement.innerText = `${weather.main.temp} ºC`;
+  if (descElement) descElement.innerText = `${weather.weather[0].description}`;
 };
 
 // TODO: Get the city from the input element
