@@ -7,6 +7,7 @@ import {
 
 // TODO: Create references for all the html elements
 export const buttonClick = document.getElementById('button-location');
+const locationField = document.getElementById('weather-location-input');
 const WeatherIconPng = document.getElementById('weather-icon');
 const maxTempElement = document.getElementById('text-temp-max');
 const minTempElement = document.getElementById('text-temp-min');
@@ -35,7 +36,10 @@ export const updateInteface = (weather: WeatherResponse): void => {
 
 // TODO: Get the city from the input element
 export function getCity(): string {
-  return '';
+  if (locationField) {
+    return (locationField as HTMLInputElement).value;
+  }
+  return '-';
 }
 
 function getDayOfWeek(): string {
