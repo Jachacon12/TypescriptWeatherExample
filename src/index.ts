@@ -17,6 +17,12 @@ updateInteface(JSON.parse(response));
 
 // Add an event listener to the button
 buttonClick?.addEventListener('click', async () => {
+  // Disable button after click
+  if (buttonClick) {
+    buttonClick.style.opacity = '0.5';
+    buttonClick.style.pointerEvents = 'none';
+  }
+
   // Get new value of location input, fallback to defaultCity if undefined
   const city = getCity();
   const newCity = city.length > 0 && city !== '-' ? city : defaultCity;
@@ -32,5 +38,11 @@ buttonClick?.addEventListener('click', async () => {
     });
 
   // update interface based response
-  if (newResponse) updateInteface(newResponse);
+  if (newResponse) {
+    updateInteface(newResponse);
+    if (buttonClick) {
+      buttonClick.style.pointerEvents = 'all';
+      buttonClick.style.opacity = '1';
+    }
+  }
 });
