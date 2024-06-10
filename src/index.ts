@@ -1,9 +1,49 @@
 // Style import
 import './styles/main.scss';
 
+import { response } from './mock/response';
 // Import the API request method
-import { buttonClick, getCity, updateInteface } from './dom-manipulation/domManipulation';
+import { fetchData } from './networking/weather';
+import {
+  buttonClick,
+  getCity,
+  updateInteface,
+} from './dom-manipulation/domManipulation';
+
+const defaultCity = 'London';
+const overlayElement = document.getElementById('overlay');
+
+// Initialize app
+updateInteface(JSON.parse(response));
 
 // Add an event listener to the button
+buttonClick!.addEventListener('click', async () => {
+  // Disable button after click
+  buttonClick!.style.opacity = '0.5';
+  buttonClick!.style.pointerEvents = 'none';
+  overlayElement!.style.opacity = '1';
 
-// Create an async function to call the API method
+  try {
+    // Get new value of location input, fallback to defaultCity if undefined
+    const city = getCity();
+    const newCity = city.length > 0 && city !== '-' ? city : defaultCity;
+
+    // Create an async function to call the API method
+    // fetch new data base on the value
+    const newResponse = await fetchData(newCity).catch(error => {
+      console.error('Error:', error);
+    });
+
+    // update interface based response
+    if (newResponse) {
+      updateInteface(newResponse);
+    }
+  } finally {
+    // Re-enable button after fetch operation
+    setTimeout(() => {
+      buttonClick!.style.pointerEvents = 'all';
+      buttonClick!.style.opacity = '1';
+      overlayElement!.style.opacity = '0';
+    }, 300);
+  }
+});
