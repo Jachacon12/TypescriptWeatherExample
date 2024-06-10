@@ -16,33 +16,29 @@ const defaultCity = 'London';
 updateInteface(JSON.parse(response));
 
 // Add an event listener to the button
-buttonClick?.addEventListener('click', async () => {
+buttonClick!.addEventListener('click', async () => {
   // Disable button after click
-  if (buttonClick) {
-    buttonClick.style.opacity = '0.5';
-    buttonClick.style.pointerEvents = 'none';
-  }
+  buttonClick!.style.opacity = '0.5';
+  buttonClick!.style.pointerEvents = 'none';
 
-  // Get new value of location input, fallback to defaultCity if undefined
-  const city = getCity();
-  const newCity = city.length > 0 && city !== '-' ? city : defaultCity;
+  try {
+    // Get new value of location input, fallback to defaultCity if undefined
+    const city = getCity();
+    const newCity = city.length > 0 && city !== '-' ? city : defaultCity;
 
-  // Create an async function to call the API method
-  // fetch new data base on the value
-  const newResponse = await fetchData(newCity)
-    .then(data => {
-      return data;
-    })
-    .catch(error => {
+    // Create an async function to call the API method
+    // fetch new data base on the value
+    const newResponse = await fetchData(newCity).catch(error => {
       console.error('Error:', error);
     });
 
-  // update interface based response
-  if (newResponse) {
-    updateInteface(newResponse);
-    if (buttonClick) {
-      buttonClick.style.pointerEvents = 'all';
-      buttonClick.style.opacity = '1';
+    // update interface based response
+    if (newResponse) {
+      updateInteface(newResponse);
     }
+  } finally {
+    // Re-enable button after fetch operation
+    buttonClick!.style.pointerEvents = 'all';
+    buttonClick!.style.opacity = '1';
   }
 });
