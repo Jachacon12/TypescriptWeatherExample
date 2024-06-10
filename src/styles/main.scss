@@ -57,6 +57,13 @@ body {
   background-color: #222831;
   color: #ffffff;
   height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media (max-width: 600px) {
+    background-color: transparent;
+    box-shadow: unset;
+  }
 }
 
 .weather-side {
@@ -75,6 +82,7 @@ body {
   -webkit-transform: translateZ(0) scale(1.02) perspective(1000px);
   transform: translateZ(0) scale(1.02) perspective(1000px);
   float: left;
+  z-index: 1;
 }
 
 .weather-side:hover {
@@ -147,11 +155,19 @@ body {
 }
 
 .info-side {
+  $padding: 25px;
   position: relative;
   float: left;
   height: 100%;
-  padding-top: 25px;
+  padding-top: $padding;
   min-width: 300px;
+  background-color: #222831;
+  border-radius: 25px;
+
+  @media (max-width: 600px) {
+    padding-top: $padding * 2;
+    top: $padding * -1;
+  }
 }
 
 .today-info {
